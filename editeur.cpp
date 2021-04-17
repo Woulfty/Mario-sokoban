@@ -2,25 +2,25 @@
 editeur.c
 ---------
 
-Par mateo21, pour Le Site du Zér0 (www.siteduzero.com)
+Par mateo21, pour Le Site du Zï¿½r0 (www.siteduzero.com)
 
-Rôle : gestion de l'éditeur de niveaux.
+Rï¿½le : gestion de l'ï¿½diteur de niveaux.
 */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SFML/SFML.h>
+#include <SFML/SFML_image.h>
 
 #include "constantes.h"
 #include "editeur.h"
 #include "fichiers.h"
 
-void editeur(SDL_Surface* ecran)
+void editeur(SFML_Surface* ecran)
 {
-    SDL_Surface *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
-    SDL_Rect position;
-    SDL_Event event;
+    SFML_Surface *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
+    SFML_Rect position;
+    SFML_Event event;
 
     int continuer = 1, clicGaucheEnCours = 0, clicDroitEnCours = 0;
     int objetActuel = MUR, i = 0, j = 0;
@@ -35,36 +35,36 @@ void editeur(SDL_Surface* ecran)
     if (!chargerNiveau(carte))
         exit(EXIT_FAILURE);
 
-    // Boucle infinie de l'éditeur
+    // Boucle infinie de l'ï¿½diteur
     while (continuer)
     {
-        SDL_WaitEvent(&event);
+        SFML_WaitEvent(&event);
         switch(event.type)
         {
-            case SDL_QUIT:
+            case SFML_QUIT:
                 continuer = 0;
                 break;
-            case SDL_MOUSEBUTTONDOWN:
-                if (event.button.button == SDL_BUTTON_LEFT)
+            case SFML_MOUSEBUTTONDOWN:
+                if (event.button.button == SFML_BUTTON_LEFT)
                 {
-                    // On met l'objet actuellement choisi (mur, caisse...) à l'endroit du clic
+                    // On met l'objet actuellement choisi (mur, caisse...) ï¿½ l'endroit du clic
                     carte[event.button.x / TAILLE_BLOC][event.button.y / TAILLE_BLOC] = objetActuel;
-                    clicGaucheEnCours = 1; // On active un booléen pour retenir qu'un bouton est enfoncé
+                    clicGaucheEnCours = 1; // On active un boolï¿½en pour retenir qu'un bouton est enfoncï¿½
                 }
-                else if (event.button.button == SDL_BUTTON_RIGHT) // Le clic droit sert à effacer
+                else if (event.button.button == SFML_BUTTON_RIGHT) // Le clic droit sert ï¿½ effacer
                 {
                     carte[event.button.x / TAILLE_BLOC][event.button.y /TAILLE_BLOC] = VIDE;
                     clicDroitEnCours = 1;
                 }
                 break;
-            case SDL_MOUSEBUTTONUP: // On désactive le booléen qui disait qu'un bouton était enfoncé
-                if (event.button.button == SDL_BUTTON_LEFT)
+            case SFML_MOUSEBUTTONUP: // On dï¿½sactive le boolï¿½en qui disait qu'un bouton ï¿½tait enfoncï¿½
+                if (event.button.button == SFML_BUTTON_LEFT)
                     clicGaucheEnCours = 0;
-                else if (event.button.button == SDL_BUTTON_RIGHT)
+                else if (event.button.button == SFML_BUTTON_RIGHT)
                     clicDroitEnCours = 0;
                 break;
-            case SDL_MOUSEMOTION:
-                if (clicGaucheEnCours) // Si on déplace la souris et que le bouton gauche de la souris est enfoncé
+            case SFML_MOUSEMOTION:
+                if (clicGaucheEnCours) // Si on dï¿½place la souris et que le bouton gauche de la souris est enfoncï¿½
                 {
                     carte[event.motion.x / TAILLE_BLOC][event.motion.y / TAILLE_BLOC] = objetActuel;
                 }
@@ -73,38 +73,38 @@ void editeur(SDL_Surface* ecran)
                     carte[event.motion.x / TAILLE_BLOC][event.motion.y / TAILLE_BLOC] = VIDE;
                 }
                 break;
-            case SDL_KEYDOWN:
+            case SFML_KEYDOWN:
                 switch(event.key.keysym.sym)
                 {
-                    case SDLK_ESCAPE:
+                    case SFMLK_ESCAPE:
                         continuer = 0;
                         break;
-                    case SDLK_s:
+                    case SFMLK_s:
                         sauvegarderNiveau(carte);
                         break;
-                    case SDLK_c:
+                    case SFMLK_c:
                         chargerNiveau(carte);
                         break;
-                    case SDLK_KP1:
+                    case SFMLK_KP1:
                         objetActuel = MUR;
                         break;
-                    case SDLK_KP2:
+                    case SFMLK_KP2:
                         objetActuel = CAISSE;
                         break;
-                    case SDLK_KP3:
+                    case SFMLK_KP3:
                         objetActuel = OBJECTIF;
                         break;
-                    case SDLK_KP4:
+                    case SFMLK_KP4:
                         objetActuel = MARIO;
                         break;
                 }
                 break;
         }
 
-        // Effacement de l'écran
-        SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 255, 255, 255));
+        // Effacement de l'ï¿½cran
+        SFML_FillRect(ecran, NULL, SFML_MapRGB(ecran->format, 255, 255, 255));
 
-        // Placement des objets à l'écran
+        // Placement des objets ï¿½ l'ï¿½cran
         for (i = 0 ; i < NB_BLOCS_LARGEUR ; i++)
         {
             for (j = 0 ; j < NB_BLOCS_HAUTEUR ; j++)
@@ -115,27 +115,27 @@ void editeur(SDL_Surface* ecran)
                 switch(carte[i][j])
                 {
                     case MUR:
-                        SDL_BlitSurface(mur, NULL, ecran, &position);
+                        SFML_BlitSurface(mur, NULL, ecran, &position);
                         break;
                     case CAISSE:
-                        SDL_BlitSurface(caisse, NULL, ecran, &position);
+                        SFML_BlitSurface(caisse, NULL, ecran, &position);
                         break;
                     case OBJECTIF:
-                        SDL_BlitSurface(objectif, NULL, ecran, &position);
+                        SFML_BlitSurface(objectif, NULL, ecran, &position);
                         break;
                     case MARIO:
-                        SDL_BlitSurface(mario, NULL, ecran, &position);
+                        SFML_BlitSurface(mario, NULL, ecran, &position);
                         break;
                 }
             }
         }
 
-        // Mise à jour de l'écran
+        // Mise ï¿½ jour de l'ï¿½cran
         SDL_Flip(ecran);
     }
 
     SDL_FreeSurface(mur);
-    SDL_FreeSurface(caisse);
-    SDL_FreeSurface(objectif);
-    SDL_FreeSurface(mario);
+    SFML_FreeSurface(caisse);
+    SFML_FreeSurface(objectif);
+    SFML_FreeSurface(mario);
 }
