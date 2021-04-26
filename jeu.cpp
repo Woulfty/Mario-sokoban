@@ -16,12 +16,12 @@ R�le : fonctions du jeu.
 #include "constantes.h"
 #include "jeu.h"
 
-void jouer(SFML_Surface* ecran)
+void jouer(sf::Transformable* ecran)
 {
-    SFML_Surface *mario[4] = {NULL}; // 4 surfaces pour chacune des directions de mario
-    SFML_Surface *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL;
-    SFML_Rect position, positionJoueur;
-    SFML_Event event;
+    entity.setOrigin( *mario[4] = {NULL}); // 4 surfaces pour chacune des directions de mario
+    entity.setOrigin( *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL);
+    entity.setPosition(positionJoueur);
+    entity.move(event);
 
     int continuer = 1, objectifsRestants = 0, i = 0, j = 0;
     int carte[NB_BLOCS_LARGEUR][NB_BLOCS_HAUTEUR] = {0};
@@ -94,7 +94,7 @@ switch(event.type)
 }
 
         // Effacement de l'�cran
-        SFML_FillRect(ecran, NULL, SFML_MapRGB(ecran->format, 255, 255, 255));
+        sf::Sprite(ecran, NULL, entity.setScale(ecran->format, 255, 255, 255));
 
         // Placement des objets � l'�cran
         objectifsRestants = 0;
@@ -109,16 +109,16 @@ switch(event.type)
                 switch(carte[i][j])
                 {
                     case MUR:
-                        SFML_BlitSurface(mur, NULL, ecran, &position);
+                        entity.setScale(mur, NULL, ecran, &position);
                         break;
                     case CAISSE:
-                        SFML_BlitSurface(caisse, NULL, ecran, &position);
+                        entity.setScale(caisse, NULL, ecran, &position);
                         break;
                     case CAISSE_OK:
-                        SFML_BlitSurface(caisseOK, NULL, ecran, &position);
+                        entity.setScale(caisseOK, NULL, ecran, &position);
                         break;
                     case OBJECTIF:
-                        SFML_BlitSurface(objectif, NULL, ecran, &position);
+                        entity.setScale(objectif, NULL, ecran, &position);
                         objectifsRestants = 1;
                         break;
                 }
@@ -138,17 +138,18 @@ switch(event.type)
 
         SFML_Flip(ecran);
     }
+    /*
+        // D�sactivation de la r�p�tition des touches (remise � 0)
+        sf::Sprite(0, 0);
 
-    // D�sactivation de la r�p�tition des touches (remise � 0)
-    SFML_EnableKeyRepeat(0, 0);
-
-    // Lib�ration des surfaces charg�es
-    SFML_FreeSurface(mur);
-    SFML_FreeSurface(caisse);
-    SFML_FreeSurface(caisseOK);
-    SFML_FreeSurface(objectif);
-    for (i = 0 ; i < 4 ; i++)
-        SFML_FreeSurface(mario[i]);
+        // Lib�ration des surfaces charg�es
+        SFML_FreeSurface(mur);
+        SFML_FreeSurface(caisse);
+        SFML_FreeSurface(caisseOK);
+        SFML_FreeSurface(objectif);
+        for (i = 0 ; i < 4 ; i++)
+            SFML_FreeSurface(mario[i]);
+    */
 }
 
 void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], SFML_Rect *pos, int direction)
