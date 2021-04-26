@@ -9,6 +9,7 @@ R�le : fonctions du jeu.
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
 #include <SFML/SFML.h>
 #include <SFML/SFML_image.h>
 

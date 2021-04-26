@@ -7,6 +7,7 @@ Par mateo21, pour Le Site du Z�r0 (www.siteduzero.com)
 R�le : gestion de l'�diteur de niveaux.
 */
 
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <SFML/SFML.h>

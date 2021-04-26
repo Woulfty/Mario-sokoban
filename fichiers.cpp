@@ -8,6 +8,7 @@ R�le : fonctions de lecture / �criture de fichiers de niveau.
 */
 
 #include <stdlib.h>
+#include <iostream>
 #include <stdio.h>
 #include <SFML/SFML.h>
 #include <SFML/SFML_image.h>
