@@ -57,40 +57,45 @@ void jouer(sf::Transformable* ecran)
     }
 
     // Activation de la r�p�tition des touches
-    SFML_EnableKeyRepeat(100, 100);
-
-    while (continuer)
-    {
-        SFML_WaitEvent(&event);
-switch(event.type)
+    sf::Event KeyPressed(100, 100);
+	if (App.GetEvent(KeyPressed)){
+		while (continuer)
+		{
+			SFML_WaitEvent(&event);
+	switch(event.type)
 {
-    case SFML_QUIT:
-        continuer = 0;
-        break;
-    case SFML_KEYDOWN:
-        switch(event.key.keysym.sym)
-        {
-            case SFMLK_ESCAPE:
-                continuer = 0;
-                break;
-            case SFMLK_UP:
-                marioActuel = mario[HAUT];
-                deplacerJoueur(carte, &positionJoueur, HAUT);
-                break;
-            case SFMLK_DOWN:
-                marioActuel = mario[BAS];
-                deplacerJoueur(carte, &positionJoueur, BAS);
-                break;
-            case SFMLK_RIGHT:
-                marioActuel = mario[DROITE];
-                deplacerJoueur(carte, &positionJoueur, DROITE);
-                break;
-            case SFMLK_LEFT:
-                marioActuel = mario[GAUCHE];
-                deplacerJoueur(carte, &positionJoueur, GAUCHE);
-                break;
-        }
-        break;
+		case SFML_QUIT:
+			continuer = 0;
+			break;
+		case KeyPressed:
+			switch(event.key.keysym.sym)
+			{
+				case SFMLK_ESCAPE:
+					continuer = 0;
+					break;
+					//Commande pour allé en haut
+				case Event.Key.Z:
+					marioActuel = mario[HAUT];
+					deplacerJoueur(carte, &positionJoueur, HAUT);
+					break;
+					//commande pour allé en bas
+				case Event.Key.S:
+					marioActuel = mario[BAS];
+					deplacerJoueur(carte, &positionJoueur, BAS);
+					break;
+					//Commande pour allé a droite
+				case Event.Key.D:
+					marioActuel = mario[DROITE];
+					deplacerJoueur(carte, &positionJoueur, DROITE);
+					break;
+					//Commande pour allé a gauche
+				case Event.Key.Q:
+					marioActuel = mario[GAUCHE];
+					deplacerJoueur(carte, &positionJoueur, GAUCHE);
+					break;
+			}
+			break;
+	}
 }
 
         // Effacement de l'�cran
@@ -132,7 +137,7 @@ switch(event.type)
         // On place le joueur � la bonne position
         position.x = positionJoueur.x * TAILLE_BLOC;
         position.y = positionJoueur.y * TAILLE_BLOC;
-        SFML_BlitSurface(marioActuel, NULL, ecran, &position);
+        entity.setPosition(marioActuel, NULL, ecran, &position);
 
 
 
@@ -152,7 +157,7 @@ switch(event.type)
     */
 }
 
-void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], SFML_Rect *pos, int direction)
+void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], entity.setPosition(*pos), int direction)
 {
     switch(direction)
     {
