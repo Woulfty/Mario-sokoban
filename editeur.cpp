@@ -11,8 +11,8 @@
 void editeur(sf::Transformable* ecran)
 {
 	sf::Transformable *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
-	SFML_Rect position;
-	SFML_Event event;
+	entity.setPosition(position);
+	sf::event event;
 
 	int continuer = 1, clicGaucheEnCours = 0, clicDroitEnCours = 0;
 	int objetActuel = MUR, i = 0, j = 0;
@@ -36,36 +36,36 @@ void editeur(sf::Transformable* ecran)
 		case SFML_QUIT:
 			continuer = 0;
 			break;
-		case SFML_MOUSEBUTTONDOWN:
+		case MouseButtonPressed:
 			if (event.button.button == SFML_BUTTON_LEFT)
 			{
 				// On met l'objet actuellement choisi (mur, caisse...) � l'endroit du clic
-				carte[event.button.x / TAILLE_BLOC][event.button.y / TAILLE_BLOC] = objetActuel;
+				carte[event.MouseMove.X / TAILLE_BLOC][event.MouseMove.Y / TAILLE_BLOC] = objetActuel;
 				clicGaucheEnCours = 1; // On active un bool�en pour retenir qu'un bouton est enfonc�
 			}
 			else if (event.button.button == SFML_BUTTON_RIGHT) // Le clic droit sert � effacer
 			{
-				carte[event.button.x / TAILLE_BLOC][event.button.y / TAILLE_BLOC] = VIDE;
+				carte[event.MouseMove.X / TAILLE_BLOC][event.MouseMove.Y / TAILLE_BLOC] = VIDE;
 				clicDroitEnCours = 1;
 			}
 			break;
-		case SFML_MOUSEBUTTONUP: // On d�sactive le bool�en qui disait qu'un bouton �tait enfonc�
+		case MouseButtonReleased: // On d�sactive le bool�en qui disait qu'un bouton �tait enfonc�
 			if (event.button.button == SFML_BUTTON_LEFT)
 				clicGaucheEnCours = 0;
 			else if (event.button.button == SFML_BUTTON_RIGHT)
 				clicDroitEnCours = 0;
 			break;
-		case SFML_MOUSEMOTION:
+		case MouseMoved:
 			if (clicGaucheEnCours) // Si on d�place la souris et que le bouton gauche de la souris est enfonc�
 			{
-				carte[event.motion.x / TAILLE_BLOC][event.motion.y / TAILLE_BLOC] = objetActuel;
+				carte[event.MouseMove.X / TAILLE_BLOC][event.MouseMove.Y / TAILLE_BLOC] = objetActuel;
 			}
 			else if (clicDroitEnCours) // Pareil pour le bouton droit de la souris
 			{
-				carte[event.motion.x / TAILLE_BLOC][event.motion.y / TAILLE_BLOC] = VIDE;
+				carte[event.MouseMove.X / TAILLE_BLOC][event.MouseMove.Y / TAILLE_BLOC] = VIDE;
 			}
 			break;
-		case SFML_KEYDOWN:
+		case KeyPressed:
 			switch (event.key.keysym.sym)
 			{
 			case SFMLK_ESCAPE:
@@ -126,8 +126,5 @@ void editeur(sf::Transformable* ecran)
 		SDL_Flip(ecran);
 	}
 
-	SDL_FreeSurface(mur);
-	SFML_FreeSurface(caisse);
-	SFML_FreeSurface(objectif);
-	SFML_FreeSurface(mario);
+	
 }

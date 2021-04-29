@@ -1,6 +1,5 @@
 
 
-
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
@@ -10,7 +9,7 @@
 #include "const.h"
 #include "fichiers.h"
 
-	int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
+int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 {
 	FILE* fichier = NULL;
 	char ligneFichier[NB_BLOCS_LARGEUR * NB_BLOCS_HAUTEUR + 1] = { 0 };
