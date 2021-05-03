@@ -1,84 +1,60 @@
+
+
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
 #include <stdio.h>
-#include "const.h"
-#include "jeu.h"
-#include "editeur.h"
+#include "const.cpp"
+
 int main(int argc, char **argv)
 {
-    sf::Window window(sf::VideoMode(800, 600), "My window");
+	sf::RenderWindow Window(sf::VideoMode(800, 600), "SFML window");
 
-    // on fait tourner le programme jusqu'Ã  ce que la fenÃªtre soit fermÃ©e
-    while (window.isOpen())
-    {
-        // on inspecte tous les Ã©vÃ¨nements de la fenÃªtre qui ont Ã©tÃ© Ã©mis depuis la prÃ©cÃ©dente itÃ©ration
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // Ã©vÃ¨nement "fermeture demandÃ©e" : on ferme la fenÃªtre
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-    }
+	// Charger les textures & sprite une fois avant la boucle de jeu
+	sf::Texture texture;
+	if (!texture.loadFromFile("menu.JPG"))
+		return EXIT_FAILURE;
+	sf::Sprite sprite(texture);
 
+	// Boucle de jeu
+	while (Window.isOpen())
 	{
-		SFML_Surface *ecran = NULL, *menu = NULL;
-		SFML_Rect positionMenu;
-		SFML_Event event;
-
-		int continuer = 1;
-
-		SFML_Init(SDL_INIT_VIDEO);
-
-		SFML_WM_SetIcon(IMG_Load("caisse.jpg"), NULL);
-		ecran = SFML_SetVideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-		SFML_WM_SetCaption("Mario Sokoban", NULL);
-
-		menu = IMG_Load("menu.jpg");
-		positionMenu.x = 0;
-		positionMenu.y = 0;
-
-		while (continuer)
+		// Process events
+		sf::Event event;
+		while (Window.pollEvent(event))
 		{
-			SFML_WaitEvent(&event);
-			switch (event.type)
-			{
-			case SFML_QUIT:
-				continuer = 0;
-				break;
-			case SFML_KEYDOWN:
-				switch (event.key.keysym.sym)
-				{
-				case SFML_ESCAPE: // Veut arrÃªter le jeu
-					continuer = 0;
-					break;
-				case SFML_KP1: // Demande Ã  jouer
-					jouer(ecran);
-					break;
-				case SFML_KP2: // Demande l'Ã©diteur de niveaux
-					editeur(ecran);
-					break;
-				}
-				break;
-			}
-
-			// Effacement de l'Ã©cran
-			SFML_FillRect(ecran, NULL, SFML_MapRGB(ecran->format, 0, 0, 0));
-			SFML_BlitSurface(menu, NULL, ecran, &positionMenu);
-			SFML_Flip(ecran);
+			// Close window: exit
+			if (event.type == sf::Event::Closed)
+				Window.close();
 		}
+		// Clear screen
+		Window.clear();
+		// Draw the sprites
+		Window.draw(sprite);
+		// ...
+		// C'est ici qu'il faut dessiner toute les choses que vous voulez afficher à l'écran
 
-		SFML_FreeSurface(menu);
-		SFML_Quit();
 
-		return EXIT_SUCCESS;
+		// Update the window
+		Window.display();
+	}
+		
+		// on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
+		sf::Event event;
+		while (Window.pollEvent(event))
+		{
+			
+			// évènement "fermeture demandée" : on ferme la fenêtre
+			if (event.type == sf::Event::Closed)
+			{ 
+				Window.close();
+		
+			}
+		
+		}
+		
+
 	}
 
 
-
-
-
-
-
-	
+	return 0;
 }
