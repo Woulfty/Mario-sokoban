@@ -13,7 +13,7 @@ R�le : fonctions de lecture / �criture de fichiers de niveau.
 #include <SFML/SFML.h>
 #include <SFML/SFML_image.h>
 
-#include "constantes.h"
+#include "const.h"
 #include "fichiers.h"
 
 int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
