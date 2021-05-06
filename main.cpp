@@ -1,5 +1,5 @@
 
-
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	sf::Style::Close;
 
 	sf::SoundBuffer buffer;
-	if (!buffer.loadFromFile("super.MP3"))
+	if (!buffer.loadFromFile("super.WAV"))
 		return -1;
 	
 
