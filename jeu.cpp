@@ -1,37 +1,40 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#include <SFML/SFML.h>
-#include <SFML/SFML_image.h>
+#include <SFML/Graphics.hpp>
 
-#include "constantes.h"
+#include "const.h"
 #include "jeu.h"
+#include "utils.h"
+#include "fichier.h"
 
-void jouer(sf::fenetre*ecran)
+
+void jouer(sf::RenderWindow* ecran)
 {
-	entity.setOrigin( *mario[4] = {NULL}); // 4 surfaces pour chacune des directions de mario
-    entity.setOrigin( *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL);
-    entity.setPosition(positionJoueur);
-    entity.move(event);
+	sf::Sprite * mario[4];
+	sf::Sprite * marioActuel;
+	sf::Sprite *mur, *caisse, *caisseOK, *objectif;
+	sf::Vector2i positionJoueur;
 
     int continuer = 1, objectifsRestants = 0, i = 0, j = 0;
     int carte[NB_BLOCS_LARGEUR][NB_BLOCS_HAUTEUR] = {0};
-
+	
     // Chargement des sprites (decors, personnage...)
-    mur = IMG_Load("mur.jpg");
-    caisse = IMG_Load("caisse.jpg");
-    caisseOK = IMG_Load("caisse_ok.jpg");
-    objectif = IMG_Load("objectif.png");
-    mario[BAS] = IMG_Load("mario_bas.gif");
-    mario[GAUCHE] = IMG_Load("mario_gauche.gif");
-    mario[HAUT] = IMG_Load("mario_haut.gif");
-    mario[DROITE] = IMG_Load("mario_droite.gif");
+    mur = loadSprite("mur.jpg");
+    caisse = loadSprite("caisse.jpg");
+    caisseOK = loadSprite("caisse_ok.jpg");
+    objectif = loadSprite("objectif.png");
+    mario[BAS] = loadSprite("mario_bas.gif");
+    mario[GAUCHE] = loadSprite("mario_gauche.gif");
+    mario[HAUT] = loadSprite("mario_haut.gif");
+    mario[DROITE] = loadSprite("mario_droite.gif");
 
 	marioActuel = mario[BAS];
 
 	if (!chargerNiveau(carte))
         exit(EXIT_FAILURE);
 
+	/*
 	for (i = 0 ; i < NB_BLOCS_LARGEUR ; i++)
     {
         for (j = 0 ; j < NB_BLOCS_HAUTEUR ; j++)
@@ -44,76 +47,96 @@ void jouer(sf::fenetre*ecran)
             }
         }
     }
+	*/
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::z))
+	while (continuer != 0)
+	{
+		ecran->clear();
+		sf::Event event;
+		while (ecran->pollEvent(event))
 		{
-			// la touche "z" est enfoncée : on l'envoie en haut
-            marioActuel = mario[HAUT];
-			deplacerJoueur(carte, &positionJoueur, HAUT);
-			break;
-        }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::d))
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Z)
+				{
+					// la touche "z" est enfoncée : on l'envoie en haut
+					marioActuel = mario[HAUT];
+					deplacerJoueur(carte, &positionJoueur, HAUT);
+
+				}
+				if (event.key.code == sf::Keyboard::D)
+				{
+					// la touche "d" est enfoncée : on l'envoie a droite
+					marioActuel = mario[DROITE];
+					deplacerJoueur(carte, &positionJoueur, DROITE);
+
+				}
+				if (event.key.code == sf::Keyboard::Q)
+				{
+					// la touche "q" est enfoncée : on l'envoie a gauche
+					marioActuel = mario[GAUCHE];
+					deplacerJoueur(carte, &positionJoueur, GAUCHE);
+
+				}
+				if (event.key.code == sf::Keyboard::S)
+				{
+					// la touche "s" est enfoncée : on l'envoie en bas
+					marioActuel = mario[BAS];
+					deplacerJoueur(carte, &positionJoueur, BAS);
+
+				}
+			}
+		}
+
+		objectifsRestants = 0;
+
+		sf::Vector2i position;
+		for (i = 0; i < NB_BLOCS_LARGEUR; i++)
 		{
-			// la touche "d" est enfoncée : on l'envoie a droite
-			marioActuel = mario[DROITE];
-			deplacerJoueur(carte, &positionJoueur, DROITE);
-			break;
-        }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::q))
-		{
-			// la touche "q" est enfoncée : on l'envoie a gauche
-			marioActuel = mario[GAUCHE];
-			deplacerJoueur(carte, &positionJoueur, GAUCHE);
-			break;
-        }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::s))
-		{
-			// la touche "s" est enfoncée : on l'envoie en bas
-			marioActuel = mario[BAS];
-			deplacerJoueur(carte, &positionJoueur, BAS);
-			break;
-        }
+			for (j = 0; j < NB_BLOCS_HAUTEUR; j++)
+			{
+				position.x = i * TAILLE_BLOC;
+				position.y = j * TAILLE_BLOC;
+				sf::Sprite * entity = nullptr;
 
-	sf::Sprite(ecran, NULL, entity.setScale(ecran->format, 255, 255, 255));
+				switch (carte[i][j])
+				{
+				case MUR:
+					entity = mur;
+					break;
+				case CAISSE:
+					entity = caisse;
+					break;
+				case CAISSE_OK:
+					entity = caisseOK;
+					break;
+				case OBJECTIF:
+					entity = objectif;
+					objectifsRestants++;
+					break;
+				}
 
-	objectifsRestants = 0;
+				if (entity != nullptr)
+				{
+					entity->setPosition(position.x, position.y);
+					ecran->draw(*entity);
+				}
+			}
+		}
 
-        for (i = 0 ; i < NB_BLOCS_LARGEUR ; i++)
-        {
-            for (j = 0 ; j < NB_BLOCS_HAUTEUR ; j++)
-            {
-                position.x = i * TAILLE_BLOC;
-                position.y = j * TAILLE_BLOC;
+		if (!objectifsRestants)
+			continuer = 0;
 
-                switch(carte[i][j])
-                {
-                    case MUR:
-                        entity.setScale(mur, NULL, ecran, &position);
-                        break;
-                    case CAISSE:
-                        entity.setScale(caisse, NULL, ecran, &position);
-                        break;
-                    case CAISSE_OK:
-                        entity.setScale(caisseOK, NULL, ecran, &position);
-                        break;
-                    case OBJECTIF:
-                        entity.setScale(objectif, NULL, ecran, &position);
-                        objectifsRestants = 1;
-                        break;
-                }
-            }
-        }
+		position.x = positionJoueur.x * TAILLE_BLOC;
+		position.y = positionJoueur.y * TAILLE_BLOC;
+		marioActuel->setPosition(position.x, position.y);
+		ecran->draw(*marioActuel);
 
-	if (!objectifsRestants)
-            continuer = 0;
-
-	position.x = positionJoueur.x * TAILLE_BLOC;
-    position.y = positionJoueur.y * TAILLE_BLOC;
-    entity.setPosition(marioActuel, NULL, ecran, &position);
-
+		ecran->display();
+	}
 }
 
-void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], entity.setPosition(*pos), int direction)
+void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], sf::Vector2i * pos, int direction)
 {
 
     switch(direction)

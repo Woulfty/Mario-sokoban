@@ -1,13 +1,12 @@
-
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
-#include <SFML/SFML.h>
-#include <SFML/SFML_image.h>
+#include <SFML/Graphics.hpp>
 
 #include "const.h"
-#include "fichiers.h"
+#include "fichier.h"
 
 int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 {

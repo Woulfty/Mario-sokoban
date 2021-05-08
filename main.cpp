@@ -3,7 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
 #include <stdio.h>
-#include "const.cpp"
+#include "const.h"
+#include "jeu.h"
+#include "editeur.h"
+#include "fichier.h"
 
 int main(int argc, char **argv)
 {
@@ -16,11 +19,11 @@ int main(int argc, char **argv)
 	sf::Sprite sprite(texture);
 	sf::Style::Close;
 
-	sf::SoundBuffer buffer;
-	if (!buffer.loadFromFile("super.WAV"))
+	sf::Music buffer;
+	if (!buffer.openFromFile("super.wav"))
 		return -1;
 	
-
+	buffer.play();
 
 	// Boucle de jeu
 	while (Window.isOpen())
@@ -32,6 +35,20 @@ int main(int argc, char **argv)
 			// Close window: exit
 			if (event.type == sf::Event::Closed)
 				Window.close();
+
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Num1)
+				{
+					// la touche "1" est enfoncée : on l'envoie sur le jeux
+					jouer(&Window);
+				}
+				if (event.key.code == sf::Keyboard::Num2)
+				{
+					// la touche "2" est enfoncée : on l'envoie sur l'éditeur
+					editeur(&Window);
+				}
+			}
 		}
 		// Clear screen
 		Window.clear();
@@ -45,33 +62,8 @@ int main(int argc, char **argv)
 		Window.display();
 	}
 		
-		// on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
-		sf::Event event;
-		while (Window.pollEvent(event))
-		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-			{
-				// la touche "1" est enfoncée : on l'envoie sur le jeux
-				character.move("jeux.cpp");
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-			{
-				// la touche "2" est enfoncée : on l'envoie sur l'éditeur
-				character.move("editeur.cpp");
-			}
-
-			// évènement "fermeture demandée" : on ferme la fenêtre
-			if (event.type == sf::Event::Closed)
-			{ 
-				Window.close();
-		
-			}
-		
-		}
-		
-            return 0;
-
-	}
+	return 0;
+}
 
 
 	

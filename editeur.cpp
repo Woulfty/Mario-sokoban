@@ -1,16 +1,16 @@
 ﻿#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#include <SFML/SFML.h>
-#include <SFML/SFML_image.h>
+#include <SFML/Graphics.hpp>
 
 #include "const.h"
 #include "editeur.h"
-#include "fichiers.h"
+#include "fichier.h"
 
-void editeur(sf::Transformable* ecran)
+void editeur(sf::RenderWindow* ecran)
 {
-	sf::Transformable *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
+	/*
+	sf::Sprite *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
 	entity.setPosition(position);
 	sf::event event;
 
@@ -125,6 +125,6 @@ void editeur(sf::Transformable* ecran)
 		// Mise � jour de l'�cran
 		SDL_Flip(ecran);
 	}
-
+	*/
 	
 }
