@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv)
 {
-	sf::RenderWindow Window(sf::VideoMode(500, 500), "SFML window");
+	sf::RenderWindow Window(sf::VideoMode(500, 500), "Mario Sokoban");
 
 	// Charger les textures & sprite une fois avant la boucle de jeu
 	sf::Texture texture;
@@ -20,9 +20,9 @@ int main(int argc, char **argv)
 	sf::Style::Close;
 
 	sf::Music buffer;
-	if (!buffer.openFromFile("super.wav"))
+	if (!buffer.openFromFile("super.ogg"))
 		return -1;
-	
+
 	buffer.play();
 
 	// Boucle de jeu
@@ -38,12 +38,12 @@ int main(int argc, char **argv)
 
 			if (event.type == sf::Event::KeyPressed)
 			{
-				if (event.key.code == sf::Keyboard::Num1)
+				if (event.key.code == sf::Keyboard::Numpad1)
 				{
 					// la touche "1" est enfoncée : on l'envoie sur le jeux
 					jouer(&Window);
 				}
-				if (event.key.code == sf::Keyboard::Num2)
+				if (event.key.code == sf::Keyboard::Numpad2)
 				{
 					// la touche "2" est enfoncée : on l'envoie sur l'éditeur
 					editeur(&Window);
@@ -61,9 +61,6 @@ int main(int argc, char **argv)
 		// Update the window
 		Window.display();
 	}
-		
+
 	return 0;
 }
-
-
-	

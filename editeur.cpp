@@ -13,20 +13,16 @@ void editeur(sf::RenderWindow* ecran)
 	sf::Sprite *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
 	entity.setPosition(position);
 	sf::event event;
-
 	int continuer = 1, clicGaucheEnCours = 0, clicDroitEnCours = 0;
 	int objetActuel = MUR, i = 0, j = 0;
 	int carte[NB_BLOCS_LARGEUR][NB_BLOCS_HAUTEUR] = { 0 };
-
 	// Chargement des objets et du niveau
 	mur = IMG_Load("mur.jpg");
 	caisse = IMG_Load("caisse.jpg");
 	objectif = IMG_Load("objectif.png");
 	mario = IMG_Load("mario_bas.gif");
-
 	if (!chargerNiveau(carte))
 		exit(EXIT_FAILURE);
-
 	// Boucle infinie de l'�diteur
 	while (continuer)
 	{
@@ -92,10 +88,8 @@ void editeur(sf::RenderWindow* ecran)
 			}
 			break;
 		}
-
 		// Effacement de l'�cran
 		SFML_FillRect(ecran, NULL, SFML_MapRGB(ecran->format, 255, 255, 255));
-
 		// Placement des objets � l'�cran
 		for (i = 0; i < NB_BLOCS_LARGEUR; i++)
 		{
@@ -103,7 +97,6 @@ void editeur(sf::RenderWindow* ecran)
 			{
 				position.x = i * TAILLE_BLOC;
 				position.y = j * TAILLE_BLOC;
-
 				switch (carte[i][j])
 				{
 				case MUR:
@@ -121,10 +114,9 @@ void editeur(sf::RenderWindow* ecran)
 				}
 			}
 		}
-
 		// Mise � jour de l'�cran
 		SDL_Flip(ecran);
 	}
 	*/
-	
+
 }

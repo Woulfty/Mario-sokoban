@@ -1,4 +1,3 @@
-#pragma once
 
 
 #ifndef DEF_CONSTANTES

@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdlib.h>
@@ -14,7 +15,7 @@ int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 	char ligneFichier[NB_BLOCS_LARGEUR * NB_BLOCS_HAUTEUR + 1] = { 0 };
 	int i = 0, j = 0;
 
-	fichier = fopen("niveaux.lvl", "r");
+	fichier = fopen("niveaux.txt", "r");
 	if (fichier == NULL)
 		return 0;
 
@@ -54,7 +55,7 @@ int sauvegarderNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 	FILE* fichier = NULL;
 	int i = 0, j = 0;
 
-	fichier = fopen("niveaux.lvl", "w");
+	fichier = fopen("niveaux.txt", "w");
 	if (fichier == NULL)
 		return 0;
 
