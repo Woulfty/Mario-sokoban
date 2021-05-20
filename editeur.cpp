@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿/*#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
@@ -7,20 +7,57 @@
 #include "editeur.h"
 #include "fichier.h"
 
-void editeur(sf::RenderWindow* ecran)
+int editeur(sf::RenderWindow* Window)
 {
-	/*
-	sf::Sprite *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
-	entity.setPosition(position);
-	sf::event event;
+sf::Sprite *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
+
+{// Charger les textures & sprite une fois avant la boucle de jeu
+	sf::Texture texture;
+	if (!texture.loadFromFile("mur.JPG"))
+		return -1;
+	sf::Sprite sprite(texture);
+	
+	
+
+	
+
+	// Boucle de jeu
+	while (Window-> isOpen())
+	{
+		// Process events
+		sf::Event event;
+		while (Window->pollEvent(event))
+		{
+			
+
+
+
+		}
+		// Clear screen
+		Window->clear();
+		// Draw the sprites
+		Window->draw(sprite);
+		// ...
+		// C'est ici qu'il faut dessiner toute les choses que vous voulez afficher à l'écran
+
+
+		// Update the window
+		Window->display();
+	}
+
+	return 0;
+}
+	
+	
+
+	//entity.setPosition(position);
+	sf::Event event;
 	int continuer = 1, clicGaucheEnCours = 0, clicDroitEnCours = 0;
 	int objetActuel = MUR, i = 0, j = 0;
 	int carte[NB_BLOCS_LARGEUR][NB_BLOCS_HAUTEUR] = { 0 };
 	// Chargement des objets et du niveau
-	mur = IMG_Load("mur.jpg");
-	caisse = IMG_Load("caisse.jpg");
-	objectif = IMG_Load("objectif.png");
-	mario = IMG_Load("mario_bas.gif");
+	
+	
 	if (!chargerNiveau(carte))
 		exit(EXIT_FAILURE);
 	// Boucle infinie de l'�diteur
@@ -119,4 +156,4 @@ void editeur(sf::RenderWindow* ecran)
 	}
 	*/
 
-}
+//}

@@ -3,4 +3,4 @@
 #include <SFML/Graphics.hpp>
 
 
-void editeur(sf::RenderWindow* Window);
+//int editeur(sf::RenderWindow* Window);

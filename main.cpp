@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include "const.h"
 #include "jeu.h"
-#include "editeur.h"
+//include "editeur.h"
 #include "fichier.h"
+
+using namespace std;
 
 int main(int argc, char **argv)
 {
@@ -46,7 +48,7 @@ int main(int argc, char **argv)
 				if (event.key.code == sf::Keyboard::Numpad2)
 				{
 					// la touche "2" est enfoncée : on l'envoie sur l'éditeur
-					editeur(&Window);
+					//editeur(&Window);
 				}
 			}
 		}

@@ -16,8 +16,9 @@ int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 	int i = 0, j = 0;
 
 	fichier = fopen("niveaux.txt", "r");
-	if (fichier == NULL)
+	if (fichier == NULL) {
 		return 0;
+	}
 
 	fgets(ligneFichier, NB_BLOCS_LARGEUR * NB_BLOCS_HAUTEUR + 1, fichier);
 
@@ -41,6 +42,9 @@ int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 				break;
 			case '4':
 				niveau[j][i] = 4;
+				break;
+			case '5':
+				niveau[j][i] = 5;
 				break;
 			}
 		}
